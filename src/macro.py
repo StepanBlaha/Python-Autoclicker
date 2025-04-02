@@ -8,6 +8,7 @@ mouse_listener = None
 macros_running = False
 fake_mouse = mouse.Controller() 
 
+
 # Handle recording places clicked
 def on_click(x, y, button, pressed):
     if pressed:
@@ -36,7 +37,7 @@ def stop_record_macros():
     global mouse_listener
     if mouse_listener and mouse_listener.running:
         mouse_listener.stop()
-        print(macro_positions)
+        print(f'Set macros: {macro_positions}')
         
 # Start the loop for running macros
 def start_macro():
@@ -58,10 +59,11 @@ def macro_loop():
 
                 if i == 0:
                     fake_mouse.position = (macro_positions[i][0], macro_positions[i][1])
+                    time.sleep(0.1)
                     fake_mouse.click(mouse.Button.left)
                 else:
                     wait_time = macro_positions[i][2] - macro_positions[i-1][2]
-                    time.sleep(max(0, wait_time))
+                    time.sleep(max(0.1, wait_time))
                     fake_mouse.position = (macro_positions[i][0], macro_positions[i][1])
                     fake_mouse.click(mouse.Button.left)
                     
